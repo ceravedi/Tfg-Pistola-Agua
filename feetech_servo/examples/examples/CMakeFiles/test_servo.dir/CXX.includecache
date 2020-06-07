@@ -1,0 +1,46 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/feetech_servo/SCServo.h
+string
+-
+mutex
+-
+map
+-
+iostream
+-
+stdio.h
+-
+serial/serial.h
+-
+
+../include/feetech_servo/WaterArm.h
+iostream
+-
+thread
+-
+chrono
+-
+feetech_servo/SCServo.h
+-
+
+/home/javier/programming/Tfg-Pistola-Agua/feetech_servo/examples/main.cpp
+feetech_servo/WaterArm.h
+-
+iostream
+-
+thread
+-
+chrono
+-
+mutex
+-
+iomanip
+-
+

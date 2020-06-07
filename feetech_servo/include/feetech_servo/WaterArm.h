@@ -25,24 +25,37 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include <string>
 
+
+#include <feetech_servo/Joystick.h>
 #include <feetech_servo/SCServo.h>
 
 class WaterArm{
 public:
     WaterArm();
 
-    bool init(int _idElbow, int _idShoulder);
-    // bool servocalibration();
-    // bool moveElbow(int _position);
-    // bool moveShoulder(int _position);
+    bool init();
+    bool initJoystick();
+    bool servoCalibration(int idJoint_);
+    bool moveJoint(int idJoint_,int position_); 
+    bool setSpeedAndTime(int idJoint_,int speed_,int time_);
+    bool keyboardMode();
+    bool joystickMode(); 
+//    bool moveJointCamera(int idJoint_,int position_); 
 
 private:
+    Joystick joysticks;
+    JoystickEvent joysticksEvent;
+    int character; // tecla de caracter 
     int idElbow_, idShoulder_;
+    int positionActualShoulder_,positionActualElbow_;
     int maxPositionElbow_, minPositionElbow_;
     int maxPositionShoulder_, minPositionShoulder_;
+    int speedElbow_,timeElbow_;
+    int speedShoulder_,timeShoulder_;
 
-    SCServo *servoDriverElbow_;
+    SCServo *servoDriver_;
 };
 
 

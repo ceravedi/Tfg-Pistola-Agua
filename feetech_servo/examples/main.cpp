@@ -19,36 +19,62 @@
 //  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //---------------------------------------------------------------------------------------------------------------------
 
-#include <feetech_servo/SCServo.h>
+#include <feetech_servo/WaterArm.h>
+#include <feetech_servo/Joystick.h>
 
 #include <iostream>
 #include <thread>
 #include <chrono>
 #include <mutex>
 #include <iomanip>
+#include <string>
 
-int main(int _argc, char **_argv) {		
-	std::cout << "Write serial port (default: /dev/ttyUSB0), type 1 for default: ";
-	std::string portUSB;
-	std::cin >> portUSB;
-	if(portUSB == "1"){
-		portUSB = "/dev/ttyUSB0";
+
+
+int main(int _argc, char **_argv) {
+	int modo=0;
+	bool verifyInitServo=0;
+	bool verifyInitJoystick=0;
+	bool fin=0;
+	bool *finKeyboard=0;
+	bool finJoystick=0;
+	bool finAutomatic=0;	
+	WaterArm arm;
+	verifyInitServo=arm.init();
+	verifyInitJoystick=arm.initJoystick();
+	std::cout <<"Volvemos a main.cpp\n";
+	if(verifyInitServo==true){
+		std::cout << "Se ha realizado correctamente init\n";
+		arm.servoCalibration(1);
+		arm.servoCalibration(2);
+			while(fin==0){
+				std::cout <<"Elige modo:\n 1 para modo teclado \n 2 para modo joystick\n 3 para modo automático ";
+				std::cin >> modo;
+				if(modo==1 ){
+					while(finKeyboard==0){
+						arm.keyboardMode();
+						std::this_thread::sleep_for(std::chrono::milliseconds(200));
+					}
+				}
+				if(modo==2){
+					while(finJoystick==0){
+						arm.joystickMode();
+						std::this_thread::sleep_for(std::chrono::milliseconds(200));
+					}
+
+
+				}
+
+				
+
+
+			}
 	}
-
-	std::cout << "Write ID of Servo Feetech you want to calibrate: ";
-	int idServo;
-	std::cin >> idServo;
-
-	SCServo *servoDriver;
-	servoDriver =  new SCServo(portUSB);
-
-	if(servoDriver->isConnected()){
-		servoDriver->EnableTorque(idServo, 1);
-		int pos = 500;
-		servoDriver->WritePos(idServo, pos, 100, 0);
-    	}else{
-		std::cout << "Servo Driver not connected!" << std::endl;
-    	}
-
+	else {
+		std::cout << "No se ha realizado correctamente init\n";
+	}
+	
+ 
 	return 0;
 }
+	
