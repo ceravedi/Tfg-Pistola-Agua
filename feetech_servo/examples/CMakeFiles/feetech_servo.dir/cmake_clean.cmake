@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/feetech_servo.dir/src/SCServo.cpp.o"
   "CMakeFiles/feetech_servo.dir/src/WaterArm.cpp.o"
+  "CMakeFiles/feetech_servo.dir/src/joystick.cpp.o"
   "libfeetech_servo.pdb"
   "libfeetech_servo.so"
 )

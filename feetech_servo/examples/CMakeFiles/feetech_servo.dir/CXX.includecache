@@ -6,6 +6,18 @@
 
 #IncludeRegexTransform: 
 
+../include/Joystick.h
+string
+-
+iostream
+-
+
+../include/feetech_servo/Joystick.h
+string
+-
+iostream
+-
+
 ../include/feetech_servo/SCServo.h
 string
 -
@@ -27,6 +39,10 @@ thread
 -
 chrono
 -
+string
+-
+feetech_servo/Joystick.h
+-
 feetech_servo/SCServo.h
 -
 
@@ -37,4 +53,26 @@ feetech_servo/SCServo.h
 /home/javier/programming/Tfg-Pistola-Agua/feetech_servo/src/WaterArm.cpp
 feetech_servo/WaterArm.h
 -
+feetech_servo/Joystick.h
+-
+string
+-
+
+/home/javier/programming/Tfg-Pistola-Agua/feetech_servo/src/joystick.cpp
+Joystick.h
+-
+sys/types.h
+-
+sys/stat.h
+-
+fcntl.h
+-
+iostream
+-
+string
+-
+sstream
+-
+unistd.h
+/home/javier/programming/Tfg-Pistola-Agua/feetech_servo/src/unistd.h
 

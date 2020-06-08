@@ -5,6 +5,10 @@ CMakeFiles/feetech_servo.dir/src/SCServo.cpp.o
  ../include/feetech_servo/SCServo.h
  /home/javier/programming/Tfg-Pistola-Agua/feetech_servo/src/SCServo.cpp
 CMakeFiles/feetech_servo.dir/src/WaterArm.cpp.o
+ ../include/feetech_servo/Joystick.h
  ../include/feetech_servo/SCServo.h
  ../include/feetech_servo/WaterArm.h
  /home/javier/programming/Tfg-Pistola-Agua/feetech_servo/src/WaterArm.cpp
+CMakeFiles/feetech_servo.dir/src/joystick.cpp.o
+ ../include/Joystick.h
+ /home/javier/programming/Tfg-Pistola-Agua/feetech_servo/src/joystick.cpp

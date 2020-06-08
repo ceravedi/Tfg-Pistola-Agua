@@ -6,6 +6,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/javier/programming/Tfg-Pistola-Agua/feetech_servo/src/SCServo.cpp" "/home/javier/programming/Tfg-Pistola-Agua/feetech_servo/examples/CMakeFiles/feetech_servo.dir/src/SCServo.cpp.o"
   "/home/javier/programming/Tfg-Pistola-Agua/feetech_servo/src/WaterArm.cpp" "/home/javier/programming/Tfg-Pistola-Agua/feetech_servo/examples/CMakeFiles/feetech_servo.dir/src/WaterArm.cpp.o"
+  "/home/javier/programming/Tfg-Pistola-Agua/feetech_servo/src/joystick.cpp" "/home/javier/programming/Tfg-Pistola-Agua/feetech_servo/examples/CMakeFiles/feetech_servo.dir/src/joystick.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

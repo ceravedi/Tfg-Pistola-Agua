@@ -6,6 +6,12 @@
 
 #IncludeRegexTransform: 
 
+../include/feetech_servo/Joystick.h
+string
+-
+iostream
+-
+
 ../include/feetech_servo/SCServo.h
 string
 -
@@ -27,11 +33,17 @@ thread
 -
 chrono
 -
+string
+-
+feetech_servo/Joystick.h
+-
 feetech_servo/SCServo.h
 -
 
 /home/javier/programming/Tfg-Pistola-Agua/feetech_servo/examples/main.cpp
 feetech_servo/WaterArm.h
+-
+feetech_servo/Joystick.h
 -
 iostream
 -
@@ -42,5 +54,7 @@ chrono
 mutex
 -
 iomanip
+-
+string
 -
 

@@ -4,7 +4,11 @@
 CMakeFiles/feetech_servo.dir/src/SCServo.cpp.o: ../include/feetech_servo/SCServo.h
 CMakeFiles/feetech_servo.dir/src/SCServo.cpp.o: ../src/SCServo.cpp
 
+CMakeFiles/feetech_servo.dir/src/WaterArm.cpp.o: ../include/feetech_servo/Joystick.h
 CMakeFiles/feetech_servo.dir/src/WaterArm.cpp.o: ../include/feetech_servo/SCServo.h
 CMakeFiles/feetech_servo.dir/src/WaterArm.cpp.o: ../include/feetech_servo/WaterArm.h
 CMakeFiles/feetech_servo.dir/src/WaterArm.cpp.o: ../src/WaterArm.cpp
+
+CMakeFiles/feetech_servo.dir/src/joystick.cpp.o: ../include/Joystick.h
+CMakeFiles/feetech_servo.dir/src/joystick.cpp.o: ../src/joystick.cpp
 

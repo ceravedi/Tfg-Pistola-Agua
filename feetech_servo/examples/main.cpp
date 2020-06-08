@@ -32,13 +32,11 @@
 
 
 int main(int _argc, char **_argv) {
-	int modo=0;
+	int mode=0;
 	bool verifyInitServo=0;
 	bool verifyInitJoystick=0;
-	bool fin=0;
-	bool *finKeyboard=0;
-	bool finJoystick=0;
-	bool finAutomatic=0;	
+	int id_,setSpeed_,setTime_;
+
 	WaterArm arm;
 	verifyInitServo=arm.init();
 	verifyInitJoystick=arm.initJoystick();
@@ -47,24 +45,52 @@ int main(int _argc, char **_argv) {
 		std::cout << "Se ha realizado correctamente init\n";
 		arm.servoCalibration(1);
 		arm.servoCalibration(2);
-			while(fin==0){
-				std::cout <<"Elige modo:\n 1 para modo teclado \n 2 para modo joystick\n 3 para modo automático ";
-				std::cin >> modo;
-				if(modo==1 ){
-					while(finKeyboard==0){
+			while(arm.fin==0){
+				std::cout <<"Display:\n 1 keyboardMode \n 2 joystickMode\n 3 SetSpeedAndTime \n 4 servoCalibration\n Press any other key to finish program";
+				std::cin >> mode;
+				switch(mode)
+				{
+
+				
+					case 1 :
+					arm.finKeyboard=0;
+					std::cout << "W ->Shoulder Up \n S -> Shoulder Down \n E -> Elbow Up \n D -> Elbow Down \n A -> END";
+					while(arm.finKeyboard==0){
+						
 						arm.keyboardMode();
 						std::this_thread::sleep_for(std::chrono::milliseconds(200));
 					}
-				}
-				if(modo==2){
-					while(finJoystick==0){
+					break;
+					case 2: 
+					arm.finJoystick=0;
+					std::cout << "Left Joystick UP ->Shoulder Up \n Left Joystick Down -> Shoulder Down \n Right Joystick Up -> Elbow Up \n Right Joystick Down -> Elbow Down \n Press X -> Shoot \nPress other button -> END";
+					while(arm.finJoystick==0){
 						arm.joystickMode();
-						std::this_thread::sleep_for(std::chrono::milliseconds(200));
+						std::this_thread::sleep_for(std::chrono::milliseconds(10));
 					}
+					break;
+					case 3:
+					std::cout << "Enter idJoint\n1 idShoulder\n 2 idElbow\n";
+					std::cin  >> id_;
+					std::cout << "Enter Speed (recommendended between 1000 and 3000)\n";
+					std::cin  >> setSpeed_;
+					std::cout << "Enter Time (recommended between 0 and 100)";
+					std::cin  >> setTime_;
+					arm.setSpeedAndTime(id_,setSpeed_,setTime_);
+					break;
 
+					case 4:
+					arm.servoCalibration(1);
+					arm.servoCalibration(2);
+					break;
+
+					default :
+					arm.fin=1;
+					std:: cout <<"Program End";
 
 				}
-
+				
+				
 				
 
 

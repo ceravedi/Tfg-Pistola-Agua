@@ -42,9 +42,14 @@ public:
     bool setSpeedAndTime(int idJoint_,int speed_,int time_);
     bool keyboardMode();
     bool joystickMode(); 
-//    bool moveJointCamera(int idJoint_,int position_); 
+    
+ public:
+    bool fin=0;
+    bool finJoystick=0;
+    bool finKeyboard=0;
 
 private:
+
     Joystick joysticks;
     JoystickEvent joysticksEvent;
     int character; // tecla de caracter 
@@ -54,7 +59,7 @@ private:
     int maxPositionShoulder_, minPositionShoulder_;
     int speedElbow_,timeElbow_;
     int speedShoulder_,timeShoulder_;
-
+    int shoot;
     SCServo *servoDriver_;
 };
 

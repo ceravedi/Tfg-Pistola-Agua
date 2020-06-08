@@ -63,14 +63,14 @@ bool WaterArm::init(){
     	}
 
 
-		speedElbow_=3000;
+		speedElbow_=1000;
 		timeElbow_=0;
-		speedShoulder_=3000;
+		speedShoulder_=1000;
 		timeShoulder_=0;
 		maxPositionElbow_=1300;
 		minPositionElbow_=700;
 		maxPositionShoulder_=1200;
-		minPositionShoulder_=700;
+		minPositionShoulder_=800;
 		std::cout << "Valores default:\n Speed 3000 \n Time 0 \n minpositionShoulder 500 maxpositionShoulder 900 \n minpositionElbow 100 maxpositionElbow 500\n";
 		
     return true;
@@ -97,10 +97,10 @@ bool WaterArm::servoCalibration(int idJoint_){
 			 pos = pos - 50;
 		}
 
-		servoDriver_->WritePos(idShoulder_, 730, speedShoulder_, timeShoulder_);
+		servoDriver_->WritePos(idShoulder_, 830, speedShoulder_, timeShoulder_);
 		std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 		std::cout << "ServoId:"<< idShoulder_ << "Calibrated"<< std::endl;
-		positionActualShoulder_=730;
+		positionActualShoulder_=830;
 
 	}
 
@@ -177,22 +177,40 @@ return true;
 
 bool WaterArm::setSpeedAndTime(int idJoint_,int speed_,int time_){
 
+	if(idJoint_==idShoulder_){
+		speedShoulder_=speed_;
+		timeShoulder_=time_;
+		std::cout <<"Speed and time change correctly\n";
+	}
+	if(idJoint_==idElbow_)
+	{
+		speedElbow_=speed_;
+		timeElbow_=time_;
+		std::cout <<"Speed and time change correctly\n";
+
+	}
+	if(idJoint_!=idShoulder_ && idJoint_!=idElbow_){
+		std::cout <<"idJoint_ not found!\n";
+		return false;
+	}
 
 
 
 
 
+return true;
 }
 
 //-------------------------------------------------------------------------------------------------------------
 
 bool WaterArm::keyboardMode(){
+	finKeyboard=0;
 	std::cout <<"Estoy en keyboardmode\n";
 	character=getchar();
 	std::cout <<"getchar saca el valor para character"<<character<<std::endl;
 	if(character==119){
 		positionActualShoulder_=positionActualShoulder_+30;
-		std::cout <<"DETECTE LA W\n";
+		std::cout <<"I detected W\n";
 		moveJoint(idShoulder_,positionActualShoulder_);
 
 
@@ -200,21 +218,27 @@ bool WaterArm::keyboardMode(){
 	}
 	if(character==115){
 		positionActualShoulder_=positionActualShoulder_-30;
-		std::cout <<"DETECTE LA S\n";
+		std::cout <<"I detected S\n";
 		moveJoint(idShoulder_,positionActualShoulder_);
 
 	}
 
 	if(character==101){
 		positionActualElbow_=positionActualElbow_+30;
-		std::cout <<"DETECTE LA E\n";
+		std::cout <<"I detected E\n";
 		moveJoint(idElbow_,positionActualElbow_);
 
 	}
 	if(character==100){
 		positionActualElbow_=positionActualElbow_-30;
-		std::cout <<"DETECTE LA D\n";
+		std::cout <<"I detected D\n";
 		moveJoint(idElbow_,positionActualElbow_);
+
+	}
+
+		if(character==97){
+		std::cout <<"I detected A\n";
+		finKeyboard=1;
 
 	}
 
@@ -231,11 +255,11 @@ bool WaterArm::initJoystick(){
 
 	if (!joysticks.isFound())
 {
-std::cout <<"open failed.\n";
+std::cout <<"initJoystick doesn't work.\n";
   // hmm
 }
 else{
-	std::cout << "open sucessful";
+	std::cout << "initJoystick works correctly";
 	return false;
 }
 
@@ -248,41 +272,58 @@ bool WaterArm::joystickMode(){
 
 	if (joysticks.sample(&joysticksEvent))
   {
-    //if (joysticksEvent.isButton())
-   // {
-   //   std::cout << "Button " << joysticksEvent.number  << " is " << joysticksEvent.value << std::endl;
-    //}
+    if (joysticksEvent.isButton())
+    {
+      std::cout << "Button " << int(joysticksEvent.number)  << " is " << joysticksEvent.value << std::endl;
+    }
+	if(joysticksEvent.number==0 && joysticksEvent.value==1)
+	{
+		shoot=1;
+		std::cout <<"WATERR!!\n";
+
+	}
+	else{
+		shoot=0;
+	}
+	if(joysticksEvent.number!=0 && joysticksEvent.value==1)
+	{
+		finJoystick=1;
+		std::cout <<"END\n";
+
+	}
+
 	 if (joysticksEvent.isAxis())
     {
-     	std::cout <<"Axis" << joysticksEvent.number <<" is at position" << joysticksEvent.value << std::endl;
-	 	if(joysticksEvent.number==1 && joysticksEvent.value>10000){
+     	std::cout <<"Axis" << int(joysticksEvent.number) <<" is at position" << joysticksEvent.value << std::endl;
+	 	if(joysticksEvent.number==1 && joysticksEvent.value>20000){
 			 if(positionActualShoulder_<maxPositionShoulder_+50 && positionActualShoulder_>minPositionShoulder_-50){
-				positionActualShoulder_=positionActualShoulder_-30;
+				positionActualShoulder_=positionActualShoulder_-10;
 			 	std::cout <<"DETECTADO JOYSTICK IZQUIERDO HACIA ABAJO(HOMBRO HACIA ABAJO)\n";
 				moveJoint(idShoulder_,positionActualShoulder_);
 			 }
 	 	}
+						
 
-		 if(joysticksEvent.number==1 && joysticksEvent.value<-10000){
+		 if(joysticksEvent.number==1 && joysticksEvent.value<-20000){
 			if(positionActualShoulder_<maxPositionShoulder_+50 && positionActualShoulder_>minPositionShoulder_-50){
-				positionActualShoulder_=positionActualShoulder_+30;
+				positionActualShoulder_=positionActualShoulder_+10;
 				std::cout <<"DETECTADO JOYSTICK IZQUIERDO HACIA ARRIBA(HOMBRO HACIA ARRIBA)\n";
 				moveJoint(idShoulder_,positionActualShoulder_);
 			}
 	 	}
 
 
-		if(joysticksEvent.number==2 && joysticksEvent.value>10000){
+		if(joysticksEvent.number==4 && joysticksEvent.value>20000){
 			 if(positionActualElbow_<maxPositionElbow_+50 && positionActualElbow_>minPositionElbow_-50){
-			 	positionActualElbow_=positionActualElbow_-30;
+			 	positionActualElbow_=positionActualElbow_-10;
 				std::cout <<"DETECTADO JOYSTICK DERECHO HACIA ABAJO(CODO HACIA ABAJO)\n";
 				moveJoint(idElbow_,positionActualElbow_);
 			 }
 	 	}
 
-		 if(joysticksEvent.number==2 && joysticksEvent.value<-10000){
+		 if(joysticksEvent.number==4 && joysticksEvent.value<-20000){
 			 if(positionActualElbow_<maxPositionElbow_+50 && positionActualElbow_>minPositionElbow_-50){
-				positionActualElbow_=positionActualElbow_+30;
+				positionActualElbow_=positionActualElbow_+10;
 				std::cout <<"DETECTADO JOYSTICK DERECHO HACIA ARRIBA(CODO HACIA ARRIBA)\n";
 				moveJoint(idElbow_,positionActualElbow_);
 			 }

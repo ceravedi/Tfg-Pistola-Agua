@@ -66,7 +66,7 @@ CMAKE_BINARY_DIR = /home/javier/programming/Tfg-Pistola-Agua/feetech_servo/examp
 CMakeFiles/feetech_servo.dir/all:
 	$(MAKE) -f CMakeFiles/feetech_servo.dir/build.make CMakeFiles/feetech_servo.dir/depend
 	$(MAKE) -f CMakeFiles/feetech_servo.dir/build.make CMakeFiles/feetech_servo.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/javier/programming/Tfg-Pistola-Agua/feetech_servo/examples/CMakeFiles --progress-num=1,2,3 "Built target feetech_servo"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/javier/programming/Tfg-Pistola-Agua/feetech_servo/examples/CMakeFiles --progress-num=1,2,3,4 "Built target feetech_servo"
 .PHONY : CMakeFiles/feetech_servo.dir/all
 
 # Include target in all.
@@ -76,7 +76,7 @@ all: CMakeFiles/feetech_servo.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/feetech_servo.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/javier/programming/Tfg-Pistola-Agua/feetech_servo/examples/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/javier/programming/Tfg-Pistola-Agua/feetech_servo/examples/CMakeFiles 4
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/feetech_servo.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/javier/programming/Tfg-Pistola-Agua/feetech_servo/examples/CMakeFiles 0
 .PHONY : CMakeFiles/feetech_servo.dir/rule
@@ -121,7 +121,7 @@ examples/preinstall:
 examples/CMakeFiles/test_servo.dir/all: CMakeFiles/feetech_servo.dir/all
 	$(MAKE) -f examples/CMakeFiles/test_servo.dir/build.make examples/CMakeFiles/test_servo.dir/depend
 	$(MAKE) -f examples/CMakeFiles/test_servo.dir/build.make examples/CMakeFiles/test_servo.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/javier/programming/Tfg-Pistola-Agua/feetech_servo/examples/CMakeFiles --progress-num=4,5 "Built target test_servo"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/javier/programming/Tfg-Pistola-Agua/feetech_servo/examples/CMakeFiles --progress-num=5,6 "Built target test_servo"
 .PHONY : examples/CMakeFiles/test_servo.dir/all
 
 # Include target in all.
@@ -131,7 +131,7 @@ all: examples/CMakeFiles/test_servo.dir/all
 
 # Build rule for subdir invocation for target.
 examples/CMakeFiles/test_servo.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/javier/programming/Tfg-Pistola-Agua/feetech_servo/examples/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/javier/programming/Tfg-Pistola-Agua/feetech_servo/examples/CMakeFiles 6
 	$(MAKE) -f CMakeFiles/Makefile2 examples/CMakeFiles/test_servo.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/javier/programming/Tfg-Pistola-Agua/feetech_servo/examples/CMakeFiles 0
 .PHONY : examples/CMakeFiles/test_servo.dir/rule

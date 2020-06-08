@@ -190,6 +190,33 @@ src/WaterArm.cpp.s:
 	$(MAKE) -f CMakeFiles/feetech_servo.dir/build.make CMakeFiles/feetech_servo.dir/src/WaterArm.cpp.s
 .PHONY : src/WaterArm.cpp.s
 
+src/joystick.o: src/joystick.cpp.o
+
+.PHONY : src/joystick.o
+
+# target to build an object file
+src/joystick.cpp.o:
+	$(MAKE) -f CMakeFiles/feetech_servo.dir/build.make CMakeFiles/feetech_servo.dir/src/joystick.cpp.o
+.PHONY : src/joystick.cpp.o
+
+src/joystick.i: src/joystick.cpp.i
+
+.PHONY : src/joystick.i
+
+# target to preprocess a source file
+src/joystick.cpp.i:
+	$(MAKE) -f CMakeFiles/feetech_servo.dir/build.make CMakeFiles/feetech_servo.dir/src/joystick.cpp.i
+.PHONY : src/joystick.cpp.i
+
+src/joystick.s: src/joystick.cpp.s
+
+.PHONY : src/joystick.s
+
+# target to generate assembly for a file
+src/joystick.cpp.s:
+	$(MAKE) -f CMakeFiles/feetech_servo.dir/build.make CMakeFiles/feetech_servo.dir/src/joystick.cpp.s
+.PHONY : src/joystick.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -206,6 +233,9 @@ help:
 	@echo "... src/WaterArm.o"
 	@echo "... src/WaterArm.i"
 	@echo "... src/WaterArm.s"
+	@echo "... src/joystick.o"
+	@echo "... src/joystick.i"
+	@echo "... src/joystick.s"
 .PHONY : help
 
 
