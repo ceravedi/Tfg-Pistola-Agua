@@ -30,17 +30,28 @@
 #include <string>
 
 
+#include <iostream>
+#include <cstdio>
+#include <serial/serial.h>
+
+
+
+
+
+
+
+
 
 int main(int _argc, char **_argv) {
 	int mode=0;
 	bool verifyInitServo=0;
 	bool verifyInitJoystick=0;
 	int id_,setSpeed_,setTime_;
-
 	WaterArm arm;
 	verifyInitServo=arm.init();
 	verifyInitJoystick=arm.initJoystick();
 	std::cout <<"Volvemos a main.cpp\n";
+	
 	if(verifyInitServo==true){
 		std::cout << "Se ha realizado correctamente init\n";
 		arm.servoCalibration(1);
@@ -63,10 +74,13 @@ int main(int _argc, char **_argv) {
 					break;
 					case 2: 
 					arm.finJoystick=0;
+					
 					std::cout << "Left Joystick UP ->Shoulder Up \n Left Joystick Down -> Shoulder Down \n Right Joystick Up -> Elbow Up \n Right Joystick Down -> Elbow Down \n Press X -> Shoot \nPress other button -> END";
 					while(arm.finJoystick==0){
 						arm.joystickMode();
+					//	arm.waterShoot();
 						std::this_thread::sleep_for(std::chrono::milliseconds(10));
+						
 					}
 					break;
 					case 3:
@@ -83,6 +97,7 @@ int main(int _argc, char **_argv) {
 					arm.servoCalibration(1);
 					arm.servoCalibration(2);
 					break;
+					case 5:
 
 					default :
 					arm.fin=1;

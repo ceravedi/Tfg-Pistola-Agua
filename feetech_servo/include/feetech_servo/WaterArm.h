@@ -25,8 +25,8 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
-#include <string>
-
+#include <string.h>
+#include "serial/serial.h"
 
 #include <feetech_servo/Joystick.h>
 #include <feetech_servo/SCServo.h>
@@ -42,11 +42,13 @@ public:
     bool setSpeedAndTime(int idJoint_,int speed_,int time_);
     bool keyboardMode();
     bool joystickMode(); 
+    bool kinematicsLimits(int positionActualShoulder_, int positionActualElbow_);
     
  public:
     bool fin=0;
     bool finJoystick=0;
     bool finKeyboard=0;
+    
 
 private:
 
@@ -55,12 +57,15 @@ private:
     int character; // tecla de caracter 
     int idElbow_, idShoulder_;
     int positionActualShoulder_,positionActualElbow_;
-    int maxPositionElbow_, minPositionElbow_;
-    int maxPositionShoulder_, minPositionShoulder_;
+    int maxAbsPositionElbow_, minAbsPositionElbow_;
+    int maxAbsPositionShoulder_, minAbsPositionShoulder_;
     int speedElbow_,timeElbow_;
     int speedShoulder_,timeShoulder_;
-    int shoot;
+    int shoot,shootant;
+    std::string test_string;
     SCServo *servoDriver_;
+    serial::Serial *my_serial;
+   
 };
 
 
