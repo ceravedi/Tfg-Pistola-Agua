@@ -47,6 +47,7 @@ int main(int _argc, char **_argv) {
 	bool verifyInitServo=0;
 	bool verifyInitJoystick=0;
 	int id_,setSpeed_,setTime_;
+	double x,y;
 	WaterArm arm;
 	verifyInitServo=arm.init();
 	verifyInitJoystick=arm.initJoystick();
@@ -57,7 +58,7 @@ int main(int _argc, char **_argv) {
 		arm.servoCalibration(1);
 		arm.servoCalibration(2);
 			while(arm.fin==0){
-				std::cout <<"Display:\n 1 keyboardMode \n 2 joystickMode\n 3 SetSpeedAndTime \n 4 servoCalibration\n Press any other key to finish program";
+				std::cout <<"Display:\n 1 keyboardMode \n 2 joystickMode\n 3 SetSpeedAndTime \n 4 servoCalibration\n 5 InverseKinematics \n Press any other key to finish program";
 				std::cin >> mode;
 				switch(mode)
 				{
@@ -98,7 +99,11 @@ int main(int _argc, char **_argv) {
 					arm.servoCalibration(2);
 					break;
 					case 5:
-
+					std::cout <<"Introduce una x e una y para el extremo de la barra (x>0 && x<40) (y<0 && y>-40) además de cumplir las restricciones articulares\n";
+					std::cin >> x;
+					std::cin >> y;
+					arm.inverseKinematics(x,y);
+					break;
 					default :
 					arm.fin=1;
 					std:: cout <<"Program End";

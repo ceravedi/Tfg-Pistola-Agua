@@ -70,8 +70,8 @@ bool WaterArm::init(){
 		timeShoulder_=0;
 		maxAbsPositionElbow_=1300;
 		minAbsPositionElbow_=400;
-		maxAbsPositionShoulder_=1200;
-		minAbsPositionShoulder_=800;
+		maxAbsPositionShoulder_=1020;
+		minAbsPositionShoulder_=700;
 		shoot=0;
 		std::cout << "Valores default:\n Speed 3000 \n Time 0 \n minpositionShoulder 500 maxpositionShoulder 900 \n minpositionElbow 100 maxpositionElbow 500\n";
 		
@@ -277,7 +277,7 @@ bool WaterArm::joystickMode(){
   {
     if (joysticksEvent.isButton())
     {
-      std::cout << "Button " << int(joysticksEvent.number)  << " is " << joysticksEvent.value << std::endl;
+     // std::cout << "Button " << int(joysticksEvent.number)  << " is " << joysticksEvent.value << std::endl;
     }
 		if(joysticksEvent.number==13 && joysticksEvent.value==1)
 		{
@@ -302,11 +302,13 @@ bool WaterArm::joystickMode(){
 
 	 if (joysticksEvent.isAxis())
     {
-     	std::cout <<"Axis" << int(joysticksEvent.number) <<" is at position" << joysticksEvent.value << std::endl;
+     //	std::cout <<"Axis" << int(joysticksEvent.number) <<" is at position" << joysticksEvent.value << std::endl;
 	 	if(joysticksEvent.number==1 && joysticksEvent.value>20000){
 			 if(positionActualShoulder_<maxAbsPositionShoulder_+50 && positionActualShoulder_>minAbsPositionShoulder_-50){
 				positionActualShoulder_=positionActualShoulder_-10;
-			 	std::cout <<"DETECTADO JOYSTICK IZQUIERDO HACIA ABAJO(HOMBRO HACIA ABAJO)\n";
+			 	std::cout <<"DETECTADO JOYSTICK IZQUIERDO HACIA ABAJO(HOMBRO HACIA ABAJO)\n"<< positionActualShoulder_<< std::endl;
+				kinematicsLimits(positionActualShoulder_,positionActualElbow_);
+				 
 				moveJoint(idShoulder_,positionActualShoulder_);
 			 }
 	 	}
@@ -315,7 +317,7 @@ bool WaterArm::joystickMode(){
 		 if(joysticksEvent.number==1 && joysticksEvent.value<-20000 && kinematicsLimits(positionActualShoulder_,positionActualElbow_)==true){
 			if(positionActualShoulder_<maxAbsPositionShoulder_+50 && positionActualShoulder_>minAbsPositionShoulder_-50){
 				positionActualShoulder_=positionActualShoulder_+10;
-				std::cout <<"DETECTADO JOYSTICK IZQUIERDO HACIA ARRIBA(HOMBRO HACIA ARRIBA)\n";
+				std::cout <<"DETECTADO JOYSTICK IZQUIERDO HACIA ARRIBA(HOMBRO HACIA ARRIBA)\n"<< positionActualShoulder_<< std::endl;
 				moveJoint(idShoulder_,positionActualShoulder_);
 			}
 	 	}
@@ -324,15 +326,16 @@ bool WaterArm::joystickMode(){
 		if(joysticksEvent.number==4 && joysticksEvent.value>20000){
 			 if(positionActualElbow_<maxAbsPositionElbow_+50 && positionActualElbow_>minAbsPositionElbow_-50){
 			 	positionActualElbow_=positionActualElbow_-10;
-				std::cout <<"DETECTADO JOYSTICK DERECHO HACIA ABAJO(CODO HACIA ABAJO)\n";
+				std::cout <<"DETECTADO JOYSTICK DERECHO HACIA ABAJO(CODO HACIA ABAJO)\n"<< positionActualElbow_<< std::endl;
 				moveJoint(idElbow_,positionActualElbow_);
+				kinematicsLimits(positionActualShoulder_,positionActualElbow_);
 			 }
 	 	}
 
 		 if(joysticksEvent.number==4 && joysticksEvent.value<-20000 && kinematicsLimits(positionActualShoulder_,positionActualElbow_)==true){
 			 if(positionActualElbow_<maxAbsPositionElbow_+50 && positionActualElbow_>minAbsPositionElbow_-50){
 				positionActualElbow_=positionActualElbow_+10;
-				std::cout <<"DETECTADO JOYSTICK DERECHO HACIA ARRIBA(CODO HACIA ARRIBA)\n";
+				std::cout <<"DETECTADO JOYSTICK DERECHO HACIA ARRIBA(CODO HACIA ARRIBA)\n"<< positionActualElbow_<< std::endl;
 				moveJoint(idElbow_,positionActualElbow_);
 			 }
 
@@ -345,19 +348,85 @@ bool WaterArm::joystickMode(){
 
 bool WaterArm::kinematicsLimits(int positionActualShoulder_, int positionActualElbow_){
 
-double y;
+double y,x;
 double q1_;
 double q2_;
-double l1_=0.22;
-double l2_=0.25;
-double factorq1_=((1200-800)/45)*(0,0174533);//Grados a radianes
-double factorq2_=((1300-400)/160)*(0,0174533);//Grados a radianes
-q1_=(positionActualShoulder_-1200)/factorq1_;
-q2_=(positionActualElbow_-400)/factorq2_;
-y= l1_*sin(q1_)+l2_*sin(q1_+q2_);
-std::cout<< "Y vale:"<< y << std::endl;
+double l1_=0.225;
+double l2_=0.245;
+double factorq1_=(((1000-800)/45)*(180));//Grados a radianes
+double factorq2_=((790-390)/80)*(180);//Grados a radianes
+q1_=((positionActualShoulder_-1000)*3.141592)/factorq1_;
+q2_=((positionActualElbow_-400)*3.141592)/factorq2_;
+y=l1_*sin(q1_)+l2_*sin(q1_+q2_);
+x=l1_*cos(q1_)+l2_*cos(q1_+q2_);
+
+std::cout<< "X en metros vale:"<< x << std::endl;
+std::cout<< "Y en metros vale:"<< y << std::endl;
 if (y<0) return true;
 if (y>=0) return false;
 	
 }
 
+//------------------------------------------------------------------------------------
+
+bool WaterArm::inverseKinematics(double x, double y){
+
+double xx,yy;
+xx=x/100;//cm a m
+yy=y/100;//cm a m
+double q1pos_,q1posnew_;
+double q1neg_,q1negnew_;
+double cosq2_;
+double sinq2_;
+double q2pos_,q2posnew_;
+double q2neg_,q2negnew_;
+double alphapos,alphaneg;
+double beta;
+double l1_=0.225;
+double l2_=0.245;
+double q1final_,q2final_;
+//calculamos el factor de cada servo para pasar de radianes a pasos de servo (factor/180)
+double factorq1_=((1000-800)/45)*(180);//radianes a pasos de servo
+double factorq2_=((780-390)/80)*(180);//radianes a pasos de servo
+cosq2_=(xx*xx+yy*yy-l1_*l1_-l2_*l2_)/(2*l1_*l2_);
+std::cout << "cosq2  " << cosq2_ << std::endl;
+sinq2_=+sqrt(1-cosq2_*cosq2_);
+std::cout << "sinq2  " << sinq2_ << std::endl;
+q2pos_=atan(sinq2_/cosq2_);//radianes
+std::cout << "q1pos  " << q1pos_ << std::endl;
+q2neg_=atan(-sinq2_/cosq2_);//radianes
+std::cout << "q1neg  " << q1neg_ << std::endl;
+beta=atan(y/x);
+std::cout << "beta  " << beta << std::endl;
+alphapos=atan((l2_*sinq2_)/(l1_+l2_*cosq2_));
+alphaneg=atan((l2_*(-sinq2_))/(l1_+l2_*cosq2_));
+std::cout << "alphapos  " << alphapos << std::endl;
+std::cout << "alphaneg  " << alphaneg << std::endl;
+q1pos_=beta-alphapos;
+std::cout << "q2pos_  " << q2pos_ << std::endl;
+q1neg_=beta-alphaneg;
+std::cout << "q2neg  " << q2neg_ << std::endl;
+//calculado tanto q1 como q2, pasamos ambas nuestros 
+q1posnew_=1000+(q1pos_*factorq1_)/3.141592;
+q1negnew_=1000+(q1neg_*factorq1_)/3.141592;
+
+q2posnew_=400+(q2pos_*factorq2_)/3.141592;
+q2negnew_=400+(q2neg_*factorq2_)/3.141592;
+std::cout << "Valores: q1positiva:  " << q1posnew_ << "  q1negativa:  " << q1negnew_ << "\n q2positiva:  " << q2posnew_ << " q2negativa:  " << q2negnew_ << std::endl;
+
+if(q1posnew_<=q1negnew_) q1final_=q1posnew_;
+else q1final_=q1negnew_;
+if(q2posnew_>=q2negnew_) q2final_=q2posnew_;
+else q2final_=q2negnew_;
+kinematicsLimits(q1final_, q2final_);
+
+
+
+
+
+
+
+
+return true;
+
+}	

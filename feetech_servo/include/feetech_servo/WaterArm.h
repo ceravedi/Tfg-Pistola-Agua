@@ -43,6 +43,7 @@ public:
     bool keyboardMode();
     bool joystickMode(); 
     bool kinematicsLimits(int positionActualShoulder_, int positionActualElbow_);
+    bool inverseKinematics(double x,double y);
     
  public:
     bool fin=0;
