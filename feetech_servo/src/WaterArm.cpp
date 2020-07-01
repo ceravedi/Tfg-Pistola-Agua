@@ -385,27 +385,26 @@ double beta;
 double l1_=0.225;
 double l2_=0.245;
 double q1final_,q2final_;
-//calculamos el factor de cada servo para pasar de radianes a pasos de servo (factor/180)
 double factorq1_=((1000-800)/45)*(180);//radianes a pasos de servo
 double factorq2_=((780-390)/80)*(180);//radianes a pasos de servo
 cosq2_=(xx*xx+yy*yy-l1_*l1_-l2_*l2_)/(2*l1_*l2_);
 std::cout << "cosq2  " << cosq2_ << std::endl;
 sinq2_=+sqrt(1-cosq2_*cosq2_);
 std::cout << "sinq2  " << sinq2_ << std::endl;
-q2pos_=atan(sinq2_/cosq2_);//radianes
-std::cout << "q1pos  " << q1pos_ << std::endl;
-q2neg_=atan(-sinq2_/cosq2_);//radianes
-std::cout << "q1neg  " << q1neg_ << std::endl;
-beta=atan(y/x);
+q2pos_=3.141592-atan(sinq2_/cosq2_);//radianes
+std::cout << "q2pos  " << q2pos_ << std::endl;
+q2neg_=3.141592-atan(-sinq2_/cosq2_);//radianes
+std::cout << "q2neg  " << q2neg_ << std::endl;
+beta=atan(yy/xx);
 std::cout << "beta  " << beta << std::endl;
 alphapos=atan((l2_*sinq2_)/(l1_+l2_*cosq2_));
 alphaneg=atan((l2_*(-sinq2_))/(l1_+l2_*cosq2_));
 std::cout << "alphapos  " << alphapos << std::endl;
 std::cout << "alphaneg  " << alphaneg << std::endl;
 q1pos_=beta-alphapos;
-std::cout << "q2pos_  " << q2pos_ << std::endl;
+std::cout << "q1pos_  " << q1pos_ << std::endl;
 q1neg_=beta-alphaneg;
-std::cout << "q2neg  " << q2neg_ << std::endl;
+std::cout << "q1neg  " << q1neg_ << std::endl;
 //calculado tanto q1 como q2, pasamos ambas nuestros 
 q1posnew_=1000+(q1pos_*factorq1_)/3.141592;
 q1negnew_=1000+(q1neg_*factorq1_)/3.141592;
@@ -416,9 +415,15 @@ std::cout << "Valores: q1positiva:  " << q1posnew_ << "  q1negativa:  " << q1neg
 
 if(q1posnew_<=q1negnew_) q1final_=q1posnew_;
 else q1final_=q1negnew_;
-if(q2posnew_>=q2negnew_) q2final_=q2posnew_;
+if(q2posnew_<=q2negnew_) q2final_=q2posnew_;
 else q2final_=q2negnew_;
+q1final_=round(q1final_);
+q2final_=round(q2final_);
 kinematicsLimits(q1final_, q2final_);
+moveJoint(idShoulder_,q1final_);
+moveJoint(idElbow_,q2final_);
+
+// Hay que mejorar esto
 
 
 
